@@ -1,10 +1,10 @@
-import test from "node:test";
-
 let fs3 = require('fs');
+// import * as fs3 from 'fs';
 
 // Read the content of the file
 const filePath3 = './src/Day3/data3.txt';
 const fileContent3 = fs3.readFileSync(filePath3, 'utf-8'); // this reads the file synchronously
+
 
 const testdata: string[] = 
 [
@@ -22,7 +22,6 @@ const testdata: string[] =
 
 // Split the content into lines
 const lines3: string[]  = fileContent3.split('\n');
-
 
 let validNumbers: number[] = []
 

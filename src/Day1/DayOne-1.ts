@@ -1,4 +1,5 @@
 const fs = require('fs');
+// import { promises as fsPromises } from 'fs';
 
 // Read the content of the file
 const filePath = './src/Day1/data.txt';
