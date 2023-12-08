@@ -149,15 +149,6 @@ console.log(lowestLocationNumber)
 
 // PART 2
 
-
-// let highestSeedNumber: number = Math.max(...seedNumbers)
-// console.log(highestSeedNumber)
-// highestSeedNumber = 4116455504
-
-// create array of all seed numbers from the ranges given
-// run these through the functions created earlier
-
-
 function mappingSingle (allMappingNumbers: number[][], inputNumber: number): number {
     let mapDetails: number [][] = []
     for (let i = 0; i < allMappingNumbers.length; i++) {
@@ -185,14 +176,8 @@ function mappingSingle (allMappingNumbers: number[][], inputNumber: number): num
 
 let part2SeedNumbers: number[][] = []
 let ranges: number[] = []
-let times: number[] = []
 
 for (let i = 0; i < seedNumbers.length; i+=2) {
-    // let rangeStart: number = seedNumbers[i]
-    // let rangeLength: number = seedNumbers[i+1]
-    // for (let j = rangeStart; j < (rangeStart + rangeLength); j++) {
-    //     part2SeedNumbers.push(j)
-    // }
     part2SeedNumbers.push([seedNumbers[i], seedNumbers[i+1] + seedNumbers[i]])
     ranges.push(seedNumbers[i+1] / 1000000)
     times.push(((seedNumbers[i+1] / 1000000) * 60) / 411645550)
@@ -200,7 +185,6 @@ for (let i = 0; i < seedNumbers.length; i+=2) {
 
 console.log('part2SeedNumbers', part2SeedNumbers)
 console.log('ranges', ranges)
-// console.log('times', times)
 
 
 // -----------------------------------------------------
@@ -227,23 +211,15 @@ function yourFunctionToEvaluate(x: number): number {
     }
 
     let outputPart2_: number = mappingSingle(mapNumbers[0], x)
-    // console.log(outputPart2_)
     let outputPart2_2: number = mappingSingle(mapNumbers[1], outputPart2_)
-    // console.log(outputPart2_2)
     let outputPart2_3: number = mappingSingle(mapNumbers[2], outputPart2_2)
-    // console.log(outputPart2_3)
     let outputPart2_4: number = mappingSingle(mapNumbers[3], outputPart2_3)
-    // console.log(outputPart2_4)
     let outputPart2_5: number = mappingSingle(mapNumbers[4], outputPart2_4)
-    // console.log(outputPart2_5)
     let outputPart2_6: number = mappingSingle(mapNumbers[5], outputPart2_5)
-    // console.log(outputPart2_6)
     let outputPart2_7: number = mappingSingle(mapNumbers[6], outputPart2_6)
-    // console.log(outputPart2_7)
 
     return outputPart2_7
-    // let y: number = (x**2) - (5*x) + 3;
-    // return y // Example: Squaring the input
+
 }
 
 // Example usage
@@ -263,52 +239,4 @@ console.log(result);
 // for section 6: (1782124901 - 1785315398) = 2540730089
 // for section 8: (4116455504 - 4204263894) = 56017390 
 // for section 9: (2403629707 - 2470222105) = 177537444
-
-
-// -----------------------------------------------------
-
-// function* generateRange(start: number, end: number) {
-//     for (let i = start; i <= end; i++) {
-//       yield i;
-//     }
-//   }
-  
-//   let part2SeedNumbers = [];
-  
-//   for (let i = 0; i < 2; i += 2) {
-//     let rangeStart = seedNumbers[i];
-//     let rangeLength = seedNumbers[i + 1];
-//     let rangeEnd = rangeStart + rangeLength
-  
-//     part2SeedNumbers.push(...generateRange(rangeStart, rangeEnd));
-//   }
-  
-//   console.log(part2SeedNumbers);
-
-//   let rangeStart = seedNumbers[0];
-//   let rangeLength = seedNumbers[1];
-//   let rangeEnd = rangeStart + rangeLength
-
-//   for (const value of generateRange(rangeStart, rangeEnd)) {
-//     // Do something with each value
-//     console.log(value);
-// }
-
-// let outputPart2_: number[] = mapping(mapNumbers[0], part2SeedNumbers)
-// console.log(outputPart2_)
-// let outputPart2_2: number[] = mapping(mapNumbers[1], outputPart2_)
-// console.log(outputPart2_2)
-// let outputPart2_3: number[] = mapping(mapNumbers[2], outputPart2_2)
-// console.log(outputPart2_3)
-// let outputPart2_4: number[] = mapping(mapNumbers[3], outputPart2_3)
-// console.log(outputPart2_4)
-// let outputPart2_5: number[] = mapping(mapNumbers[4], outputPart2_4)
-// console.log(outputPart2_5)
-// let outputPart2_6: number[] = mapping(mapNumbers[5], outputPart2_5)
-// console.log(outputPart2_6)
-// let outputPart2_7: number[] = mapping(mapNumbers[6], outputPart2_6)
-// console.log(outputPart2_7)
-
-// let lowestLocationNumberPart2: number = Math.min(...outputPart2_7)
-// console.log(lowestLocationNumberPart2)
 
