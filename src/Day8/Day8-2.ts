@@ -1,6 +1,3 @@
-// read data - save instructions and network details seperately
-// start at AAA and follow instructions, record the number of steps taken, if end result is ZZZ return the number of steps
-
 let fs8_2 = require('fs');
 
 
@@ -19,18 +16,10 @@ const instructions_2: string[] = lined_data8_2[0].split('')
 // const networkDetails_2: string[] = lined_data8_2.slice(2,10)
 const networkDetails_2: string[] = lined_data8_2.slice(2,800)
 
+
 type NetworkObject_2 = Record<string, string[]>;
 
-const networkObject_2: NetworkObject_2= {
-    // '11A': [ '11B', 'XXX' ],
-    // '11B': [ 'XXX', '11Z' ],
-    // '11Z': [ '11B', 'XXX' ],
-    // '22A': [ '22B', 'XXX' ],
-    // '22B': [ '22C', '22C' ],
-    // '22C': [ '22Z', '22Z' ],
-    // '22Z': [ '22B', '22B' ],
-    // 'XXX': [ 'XXX', 'XXX' ]
-  }
+const networkObject_2: NetworkObject_2= {};
 
 networkDetails_2.forEach(data => {
   const [key, values] = data.split(' = ');
@@ -45,41 +34,7 @@ networkDetails_2.forEach(data => {
 
 let stepNumber_2: number = 0 // count the nuber of steps
 
-function runInstructions_2(starting: string[]): number {
-
-    let currentNodes: string[] = starting // define starting nodes
-    let nextNodes: string [] = [] 
-
-    for (let i = 0; i < instructions_2.length; i++) { // run through all instructions
-        currentNodes.map((el) => { // map for all nodes 
-        // console.log(`current step: ${el}, total steps: ${stepNumber_2}`)
-        if (instructions_2[i] === 'L') {
-            nextNodes.push(networkObject_2[el][0])
-        } else if (instructions_2[i] === 'R') {
-            nextNodes.push(networkObject_2[el][1])
-        }
-        // console.log('next', nextNodes)
-        // currentNodes[index] = nextNodes[index]
-        // console.log(currentNodes)
-        
-    })
-    currentNodes = nextNodes
-    // console.log('next', nextNodes)
-    nextNodes = []
-    stepNumber_2++
-    if (stepNumber_2 % 100000 === 0) {
-        console.log('stepNumber', stepNumber_2)
-    }
-    if ((checkCurrentNodes(currentNodes)) ) {
-        // console.log('test')
-        return stepNumber_2
-    }
-
-    }
-    // console.log('end of instructions', currentNodes)
-    return runInstructions_2(currentNodes)
-
-}
+// find starting nodes
 
 let startingNodes: string[] = []
 
@@ -90,22 +45,107 @@ Object.entries(networkObject_2).forEach(([key]) => {
     }
 });
 
-// console.log('complete start', startingNodes)
+console.log('starting nodes', startingNodes)
+
+let currentNode: string = ''
+
+function runInstructions_2(step: string): number {
+
+    let currentNode: string = step
+    let nextStep: string = '' // the next element bases on the left right instructions
+    
+    for (let i = 0; i < instructions_2.length; i++) {
+        console.log(`current step: ${currentNode}, total steps: ${stepNumber_2}`)
+        if (instructions_2[i] === 'L') {
+            // console.log(network.currentNode)
+            nextStep = networkObject_2[currentNode][0]
+            stepNumber_2++
+        } else if (instructions_2[i] === 'R') {
+            nextStep = networkObject_2[currentNode][1]
+            stepNumber_2++
+        }
+    
+        currentNode = nextStep
+
+        if (ZCheck(currentNode)) {
+            return stepNumber_2
+        }
+        
+    }
+    console.log(currentNode)
+    if (ZCheck(currentNode)) {
+        return stepNumber_2
+    } else {
+        return runInstructions_2(currentNode)
+    }
+    
+    }
 
 
-function checkCurrentNodes(currentNodes: string[]) {
-    return currentNodes.every((element) => element.split('')[2] === 'Z')
+console.log(runInstructions_2(startingNodes[0]))
+
+
+function ZCheck (input: string): boolean {
+    return (input[2] === 'Z');
 }
 
-// console.log(checkCurrentNodes([ '11Z', '22Z' ]))
+// run to find how many steps it takeseach starting node to get to a node that ends in Z
+// then find the LCM of these numbers
 
-console.log(runInstructions_2(startingNodes))
+// [ 'AAA', 'XDA', 'XSA', 'CFA', 'HJA', 'HPA' ]
+// AAA - 21409 (ZZZ)
+// XDA - 14363 (MPZ)
+// XSA - 15989 (FNZ)
+// CFA - 16531 (BQZ)
+// HJA - 19241 (RSZ)
+// HPA - 19783 (XXZ)
 
-// need to find nodes that end in A to be starting nodes
-// finish when all nodes end in Z
 
-// instructions = 271
-// endingNodes = [ 'FNZ', 'MPZ', 'BQZ', 'RSZ', 'XXZ', 'ZZZ' ]
+// Now find Lowest Common Multiple (LCM)
+[21409, 14363, 15989, 16531, 19241, 19783]
 
-// [ 'KVH', 'NGP', 'QNP', 'DBX', 'PRL', 'LXM' ]
+function findLCM(array: number[]): number {
+    // (x / all elements of array) % 1 === 0
+    let x: number = 21409;
+
+
+    let solutionFound: boolean = false
+
+
+    while (!solutionFound) {
+        x+=21409
+        let divisions: number[] = array.map(el => x / el)
+        // console.log(divisions)
+        let check: boolean = divisions.every(el => el % 1 === 0)
+        if (check) {
+            solutionFound = true
+        }
+    }
+
+    return x
+}
+
+console.log(findLCM([21409, 14363, 15989, 16531, 19241, 19783]))
+// console.log(findLCM([6, 7, 21]))
+
+
+// Final answer: 21165830176709
+
+// function tryIfFails(start: string) {
+//     try {
+//         return runInstructions_2(start)
+//     } catch (error) {
+//         if (error instanceof RangeError && error.message.includes('Maximum call stack size exceeded')) {
+//         // console.log('error', error)
+//         console.log(stepNumber_2)
+//         console.log(currentNodes)
+//         return tryIfFails(currentNodes)
+//         } else {
+//             // throw error
+//             console.log(error)
+//         }
+//     }
+// }
+
+// console.log(tryIfFails(startingNodes[0]))
 
