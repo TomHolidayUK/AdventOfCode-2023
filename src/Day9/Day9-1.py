@@ -22,7 +22,7 @@ testdata9 = [
 
 all_all_differences =  []
 
-for array in array_of_arrays_of_integers:
+for array in testdata9:
     all_differences = [array]
 
     def find_differences(array):
@@ -55,7 +55,7 @@ def find_new_end(input_array):
 
 accumulator = 0
 
-for i in range(len(array_of_arrays_of_integers)):
+for i in range(len(testdata9)):
     accumulator += find_new_end(all_all_differences[i])
 
 print(accumulator)

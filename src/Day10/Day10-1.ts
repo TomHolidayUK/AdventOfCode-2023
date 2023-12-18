@@ -63,7 +63,6 @@ function findNextNode(position: number[], direction: number): number[] {
     // take position and direction as arguments, find valid next positions and next directions
 
     let next_node_data: number[] = [] // next position y, next position x, direction (1 = above, 2 = right, 3 = below, 4 = left)
-    // let direction: number[][] = []
 
     if (direction === 1) {
         let above_value: string = matrix[position[0] - 1][position[1]]
@@ -137,6 +136,7 @@ function findNextNode(position: number[], direction: number): number[] {
 }
 
 
+
 // console.log(findNextNode([1, 1], 3))
 
 
@@ -146,11 +146,16 @@ function findNextNode(position: number[], direction: number): number[] {
 // if the current position = starting position , stop function
 // count steps
 
-let steps_total: number = 13046
+let steps_total: number = 10000
+let perimeter: number[][] = []
+let perimeterWithDirections: (string|number)[][] = []
+let current_direction_global: number = 0
 
 function recursiveFunction(currentPosition: number[], direction: number): number {
 
-    
+        perimeter.push(currentPosition)
+        perimeterWithDirections.push([currentPosition[0], currentPosition[1], direction, matrix[currentPosition[0]][currentPosition[1]]])
+        current_direction_global = direction
         console.log('current value:', matrix[currentPosition[0]][currentPosition[1]])
 
         const next_position_data: number[] = findNextNode(currentPosition, direction)
@@ -160,11 +165,12 @@ function recursiveFunction(currentPosition: number[], direction: number): number
         const next_position: number[] = [next_y, next_x];
         console.log(next_position, next_direction)
 
-        if (matrix[next_y][next_x] === 'S') { // end condition
+        if ((matrix[next_y][next_x] === 'S') || (steps_total >= 15000)) { // end condition
             steps_total++
             console.log('end')
             return steps_total
         } 
+
 
         steps_total++
         console.log('steps_total', steps_total)
@@ -172,8 +178,17 @@ function recursiveFunction(currentPosition: number[], direction: number): number
 
 }
 
-
 // console.log(recursiveFunction(start_position, 3))
-console.log(recursiveFunction([ 23, 47 ], 1))
+// recursiveFunction([107, 117], 2) // 5000
+recursiveFunction([73, 53], 4) // 10000
+
+
+// ----------------Export perimeter data for part 2------------------------
+// console.log(perimeter)
+console.log(perimeterWithDirections)
+const stringData = perimeterWithDirections.map(pair => pair.join(', ')).join('\n'); 
+console.log(stringData);
+fs10.writeFileSync('src/Day10/perimeterWithDirections3.txt', stringData, 'utf-8');
+// console.log(current_direction_global)
 
 
