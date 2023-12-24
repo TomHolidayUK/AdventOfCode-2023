@@ -1,3 +1,6 @@
+# THIS SCRIPT DOESN'T WORK CORRECTLY
+
+
 file_path10 = './src/Day10/perimeterWithDirections.txt'
 
 with open(file_path10, 'r', encoding='utf-8') as file:
