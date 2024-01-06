@@ -6,5 +6,5 @@ Edit: For some I will use Python, because I felt rusty with Python and wanted so
 
 Notes:
 Day 8, part 2: I had to check on reddit to see the clue of using LCM's
-Day 12: I felt ocmpletely lost after looking at it for a few days and had to check reddit and youtube
-
+Day 12: I felt completely lost after looking at it for a few days and had to check reddit and youtube
+Day 17 - Part 1: I managed to apply Dijkstra's but it didn't account for moving in the same direction for more than 3 consecutive move. So I has to look at an online solution for inspiration
